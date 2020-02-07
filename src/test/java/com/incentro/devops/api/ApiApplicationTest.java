@@ -1,18 +1,18 @@
 package com.incentro.devops.api;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = ApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApiApplicationTests {
+public class ApiApplicationTest {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -36,7 +36,7 @@ public class ApiApplicationTests {
 		ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/api/v1/int",
 				HttpMethod.GET, entity, String.class);
 
-		Assert.assertNotNull(response.getBody());
+		Assertions.assertNotNull(response.getBody());
 		Integer.parseInt(response.getBody());
 	}
 
