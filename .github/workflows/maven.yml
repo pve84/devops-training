@@ -1,14 +1,14 @@
 name: Maven Build
 on:
-  push:
-    branches: 
-    - master
+  schedule:
+    - cron: ""
+#  push:
+#    branches: 
+#    - master
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
@@ -19,8 +19,12 @@ jobs:
       run: mvn test
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Build image
+    - name: Build image and push to ACR
+      env:
+        acr_password: ${{ secrets.acr_password }}  
       run: |
         war=$(cd target; ls api*.war)
         tag=$(echo $war | sed s/api-//g | sed s/.war//g)
-        docker build -t devops-training:$tag --build-arg war=$war -f Dockerfile ./target
+        docker build -t devopstrainingincentro.azurecr.io/devops-training:$tag --build-arg war=$war -f Dockerfile ./target
+        docker login devopstrainingincentro.azurecr.io -u devopstrainingincentro -p $acr_password
+        docker push devopstrainingincentro.azurecr.io/devops-training:$tag
