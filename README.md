@@ -1,0 +1,1 @@
+![Java CI](https://github.com/pve84/devops-training/workflows/Java%20CI/badge.svg)
