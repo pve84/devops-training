@@ -38,7 +38,7 @@ jobs:
     - name: create imagepullsecret
       run: | 
         branch=${GITHUB_REF##*/}
-        kubectl create secret docker-registry acrcreds --namespace=$branch--docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com
+        kubectl create secret docker-registry acrcreds --namespace=$branch --docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com
     - name: Deploy Chart
       run: | 
         tag=$(cd target; ls api*.war | sed s/api-//g | sed s/.war//g)
