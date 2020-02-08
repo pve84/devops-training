@@ -45,12 +45,11 @@ jobs:
       run: |
         mkdir -p ${HOME}/.kube
         echo $KUBECONFIG_CONTENT | base64 -d > ${HOME}/.kube/config
-        echo ${HOME}/.kube/config
     - name: create namespace and imagepullsecret
       run: | 
         trainee=${GITHUB_REF##*/}
         kubectl create ns $trainee --dry-run -o yaml | kubectl apply -f -
-        kubectl create secret docker-registry acrcreds --namespace=$trainee --docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com
+        kubectl create secret docker-registry acrcreds --namespace=$trainee --docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com --dry-run -o yaml | k apply -f -
     - name: Deploy Chart
       run: | 
         trainee=${GITHUB_REF##*/}
