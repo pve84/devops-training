@@ -1,4 +1,4 @@
-name: Build
+name: Build and deploy
 on: [push]
 env:
   ACR_PASSWORD: ${{ secrets.acr_password }}
@@ -33,7 +33,8 @@ jobs:
         KUBECONFIG_CONTENT: ${{ secrets.kubeconfig }}
       run: |
         mkdir -p ${HOME}/.kube
-        echo $KUBECONFIG_CONTENT> ${HOME}/.kube/config
+        echo $KUBECONFIG_CONTENT | base64 -d > ${HOME}/.kube/config
+        echo ${HOME}/.kube/config
     - name: create imagepullsecret
       run: | 
         branch=${GITHUB_REF##*/}
