@@ -19,10 +19,10 @@ jobs:
       run: |
         war=$(cd target; ls api*.war)
         tag=$(echo $war | sed s/api-//g | sed s/.war//g)
-        branch=${GITHUB_REF##*/}
-        docker build -t $REGISTRY/$branch:$tag --build-arg war=$war -f Dockerfile ./target
+        trainee=${GITHUB_REF##*/}
+        docker build -t $REGISTRY/$trainee:$tag --build-arg war=$war -f Dockerfile ./target
         echo $ACR_PASSWORD | docker login $REGISTRY -u $ACR_USERNAME --password-stdin
-        docker push $REGISTRY/$branch:$tag
+        docker push $REGISTRY/$trainee:$tag
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -35,12 +35,13 @@ jobs:
         mkdir -p ${HOME}/.kube
         echo $KUBECONFIG_CONTENT | base64 -d > ${HOME}/.kube/config
         echo ${HOME}/.kube/config
-    - name: create imagepullsecret
+    - name: create namespace and imagepullsecret
       run: | 
-        branch=${GITHUB_REF##*/}
-        kubectl create secret docker-registry acrcreds --namespace=$branch --docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com
+        trainee=${GITHUB_REF##*/}
+        kubectl create ns $trainee --dry-run -o yaml | kubectl apply -f -
+        kubectl create secret docker-registry acrcreds --namespace=$trainee --docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com
     - name: Deploy Chart
       run: | 
         tag=$(cd target; ls api*.war | sed s/api-//g | sed s/.war//g)
-        branch=${GITHUB_REF##*/}
-        helm upgrade --install --namespace $branch $branch -f simple-deploy/values.yaml --set image.repository=$branch,image.tag=$tag ./simple-deploy
+        trainee=${GITHUB_REF##*/}
+        helm upgrade --install --namespace $trainee $trainee -f simple-deploy/values.yaml --set image.repository=$trainee,image.tag=$tag ./simple-deploy
