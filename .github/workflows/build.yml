@@ -47,7 +47,7 @@ jobs:
       run: | 
         trainee=${GITHUB_REF##*/}
         kubectl create ns $trainee --dry-run -o yaml | kubectl apply -f -
-        kubectl create secret docker-registry acrcreds --namespace=$trainee --docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com --dry-run -o yaml | k apply -f -
+        kubectl create secret docker-registry acrcreds --namespace=$trainee --docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com --dry-run -o yaml | kubectl apply -f -
     - name: Deploy Chart
       run: | 
         trainee=${GITHUB_REF##*/}
