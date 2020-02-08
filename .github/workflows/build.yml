@@ -52,4 +52,4 @@ jobs:
     - name: Deploy Chart
       run: | 
         trainee=${GITHUB_REF##*/}
-        helm upgrade --install --namespace $trainee $trainee -f simple-deploy/values.yaml --set image.repository=$trainee,image.tag=$(echo imagetag.txt) ./simple-deploy
+        helm upgrade --install --namespace $trainee $trainee -f simple-deploy/values.yaml --set image.repository=$REGISTRY/$trainee,image.tag=$(echo imagetag.txt) ./simple-deploy
