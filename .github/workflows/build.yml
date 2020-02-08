@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Download math result for job 1
+    - name: Download imagetag file
       uses: actions/download-artifact@v1
       with:
         name: imagetag
@@ -52,4 +52,4 @@ jobs:
     - name: Deploy Chart
       run: | 
         trainee=${GITHUB_REF##*/}
-        helm upgrade --install --namespace $trainee $trainee -f simple-deploy/values.yaml --set image.repository=$REGISTRY/$trainee,image.tag=$(cat imagetag.txt) ./simple-deploy
+        helm upgrade --install --namespace $trainee $trainee -f simple-deploy/values.yaml --set image.repository=$REGISTRY/$trainee,image.tag=$(cat imagetag/imagetag.txt) ./simple-deploy
