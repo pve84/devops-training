@@ -9,13 +9,25 @@
 - Switch naar je nieuwe branch
 - Push de nieuwe branch naar de repository
 
-```bash
+```shell
 git help
 git clone
 git branch
 git checkout
 git push
 ```
+
+<details>
+  <summary>spoiler</summary>
+
+  ```shell
+  git clone https://github.com/pve84/devops-training
+  git branch <naam> master
+  git checkout <naam>
+  git push --set-upstream origin <naam>
+  ```
+
+</details>
 
 ### 2. Start de spring-boot applicatie controleer de werking. Build de app en start de war
 
@@ -31,17 +43,46 @@ mvn [clean] install
 java -jar
 ```
 
+<details>
+  <summary>spoiler</summary>
+
+  ```shell
+  mvn spring-boot:run
+  curl localhost:8080/api/v1/int
+  mvn clean install
+  java -jar target/api-0.0.2-SNAPSHOT.war
+  ```
+
+</details>
+
 ### 3. Maak een image. Start een container met je zelf gebouwde image
 
 - Build een image dmv de Dockerfile
-  - Zorg dat je image de juiste tag krijgt (verie nummer uit je pom)
+  - Gebruik je voornaam als imagenaam
+  - Zorg dat je image de juiste tag krijgt (versie nummer uit je pom)
 - Start een nieuwe container met je image
 - Verifieer de werking van je image
+- Laat de container op de achtergrond draaien
+- Verwijder de container
 
 ```bash
 docker build
 docker run
 ```
+
+<details>
+  <summary>spoiler</summary>
+
+  ```shell
+  docker build --tag <naam>:0.0.2-SNAPSHOT .
+  docker run <naam>:0.0.2-SNAPSHOT
+  docker run -p 8080:8080 <naam>:0.0.2-SNAPSHOT
+  curl localhost:8080/api/v1/int
+  docker run --name api -d -p 8080:8080 <naam>:0.0.2-SNAPSHOT
+  docker rm api
+  ```
+
+</details>
 
 ### 4. Update de spring-boot applicatie zodat het float endpoint beschikbaar wordt en hoog de versie van de applicatie op en voer opracht 2,3 opnieuw uit
 
