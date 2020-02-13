@@ -1,0 +1,30 @@
+  deploy:
+    # Voer deze stap alleen uit als de build klaar is
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    # download de imagetag artifact
+    - name: Download imagetag file
+      uses: actions/download-artifact@v1
+      with:
+        name: imagetag
+    # sla de secret op en decodeer het van Base64 naar plaintext
+    - name: create kubeconfig
+      env:
+        KUBECONFIG_CONTENT: ${{ secrets.kubeconfig }}
+      run: |
+        mkdir -p ${HOME}/.kube
+        echo $KUBECONFIG_CONTENT | base64 -d > ${HOME}/.kube/config
+    # maak de namespace met de naam van de trainee
+    - name: create namespace and imagepullsecret
+      run: | 
+        trainee=${GITHUB_REF##*/}
+        kubectl create ns $trainee --dry-run -o yaml | kubectl apply -f -
+        # Maak een imagepullsecret in de cluster zodat de image gepulled mag worden
+        kubectl create secret docker-registry acrcreds --namespace=$trainee --docker-server=$REGISTRY --docker-username=$ACR_USERNAME --docker-password=$ACR_PASSWORD --docker-email=foo@bar.com --dry-run -o yaml | kubectl apply -f -
+    # deploy de applicatie dmv een helm chart
+    - name: Deploy Chart
+      run: | 
+        trainee=${GITHUB_REF##*/}
+        helm upgrade --install --namespace $trainee $trainee -f simple-deploy/values.yaml --set image.repository=$REGISTRY/$trainee,image.tag=$(cat imagetag/imagetag.txt) ./simple-deploy
