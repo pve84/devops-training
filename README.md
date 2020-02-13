@@ -36,6 +36,7 @@ java -jar
 - Build een image dmv de Dockerfile
   - Zorg dat je image de juiste tag krijgt (verie nummer uit je pom)
 - Start een nieuwe container met je image
+  - Wat er er fout, en hoe kun je het fixen?
 - Verifieer de werking van je image
 
 ```bash
@@ -43,7 +44,7 @@ docker build
 docker run
 ```
 
-### 4. Update de spring-boot applicatie zodat het float endpoint beschikbaar wordt en hoog de versie van de applicatie op en voer opracht 2,3 opnieuw uit
+### 4. Update de spring-boot applicatie zodat het /float endpoint beschikbaar wordt en hoog de versie van de applicatie op en voer opracht 2,3 opnieuw uit
 
 - Maak het float endpoint beschikbaar
 - Update de versie van de applicatie in de pom.xml
@@ -52,9 +53,9 @@ docker run
 
 ### 5. Zet de Github workflow aan en kijk hoe je build verloopt
 
-- Hernoem .github/workflow/build.yml_disabled naar build.yml
+- Hernoem .github/workflows/build.yml_disabled naar build.yml
 - Commit en push
-- Kijk in github naar de buid en deploy en controleer of het goed verloopt
+- Kijk in github naar de build en deploy en controleer of het goed verloopt
 - Controleer of je applicatie beschibaar is op het Internet
 
 ### 6. Voeg een stap aan de build step toe zodat Maven ook de testen draait
