@@ -61,6 +61,7 @@ java -jar
   - Gebruik je voornaam als imagenaam
   - Zorg dat je image de juiste tag krijgt (versie nummer uit je pom)
 - Start een nieuwe container met je image
+  - Wat er er fout, en hoe kun je het fixen?
 - Verifieer de werking van je image
 - Laat de container op de achtergrond draaien
 - Verwijder de container
@@ -70,6 +71,7 @@ docker build
 docker run
 ```
 
+<<<<<<< HEAD
 <details>
   <summary>spoiler</summary>
 
@@ -85,6 +87,9 @@ docker run
 </details>
 
 ### 4. Update de spring-boot applicatie zodat het float endpoint beschikbaar wordt en hoog de versie van de applicatie op en voer opracht 2,3 opnieuw uit
+=======
+### 4. Update de spring-boot applicatie zodat het /float endpoint beschikbaar wordt en hoog de versie van de applicatie op en voer opracht 2,3 opnieuw uit
+>>>>>>> 3cb7b6cf0c800e31f4f3a282af316237a3005cd7
 
 - Maak het float endpoint beschikbaar
 - Update de versie van de applicatie in de pom.xml
@@ -93,9 +98,9 @@ docker run
 
 ### 5. Zet de Github workflow aan en kijk hoe je build verloopt
 
-- Hernoem .github/workflow/build.yml_disabled naar build.yml
+- Hernoem .github/workflows/build.yml_disabled naar build.yml
 - Commit en push
-- Kijk in github naar de buid en deploy en controleer of het goed verloopt
+- Kijk in github naar de build en deploy en controleer of het goed verloopt
 - Controleer of je applicatie beschibaar is op het Internet
 
 ### 6. Voeg een stap aan de build step toe zodat Maven ook de testen draait
