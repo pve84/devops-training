@@ -71,7 +71,6 @@ docker build
 docker run
 ```
 
-<<<<<<< HEAD
 <details>
   <summary>spoiler</summary>
 
@@ -87,9 +86,6 @@ docker run
 </details>
 
 ### 4. Update de spring-boot applicatie zodat het float endpoint beschikbaar wordt en hoog de versie van de applicatie op en voer opracht 2,3 opnieuw uit
-=======
-### 4. Update de spring-boot applicatie zodat het /float endpoint beschikbaar wordt en hoog de versie van de applicatie op en voer opracht 2,3 opnieuw uit
->>>>>>> 3cb7b6cf0c800e31f4f3a282af316237a3005cd7
 
 - Maak het float endpoint beschikbaar
 - Update de versie van de applicatie in de pom.xml
