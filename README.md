@@ -61,7 +61,6 @@ java -jar
   - Gebruik je voornaam als imagenaam
   - Zorg dat je image de juiste tag krijgt (versie nummer uit je pom)
 - Start een nieuwe container met je image
-  - Wat er er fout, en hoe kun je het fixen?
 - Verifieer de werking van je image
 - Laat de container op de achtergrond draaien
 - Verwijder de container
@@ -91,6 +90,7 @@ docker run
 - Update de versie van de applicatie in de pom.xml
 - Opdracht 2
 - Opdracht 3
+  - Wat er er fout, en hoe kun je het fixen?
 
 ### 5. Zet de Github workflow aan en kijk hoe je build verloopt
 
